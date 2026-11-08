@@ -291,3 +291,9 @@ footer a[aria-label="Back to top"]{display:none!important}
 .work-toolbar{display:flex;flex-direction:column;align-items:stretch}
 .work-toolbar .filters{width:100%;justify-content:center}
 .work-toolbar .gallery-arrows{align-self:flex-end}
+
+/* Spin only the top brand asterisk while hovered or keyboard-focused. */
+.header .wordmark sup,.floating-brand .wordmark sup{transform-origin:50% 50%;animation:brand-star-spin 2s linear infinite;animation-play-state:paused}
+.header .wordmark:hover sup,.header .wordmark:focus-visible sup,.floating-brand:hover .wordmark sup,.floating-brand:focus-visible .wordmark sup{animation-play-state:running}
+@keyframes brand-star-spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.header .wordmark sup,.floating-brand .wordmark sup{animation:none}}
