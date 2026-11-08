@@ -127,3 +127,45 @@ dialog{width:min(960px,calc(100vw - 32px));padding:28px 36px 36px;max-height:88d
 .chrome-toy-mid-drop{width:12%;left:68%;top:37%}
 .chrome-toy-mid-spark{width:9%;left:43%;top:72%}
 @media(max-width:700px){.chrome-toy-mid-arc{width:21%;left:12%;top:51%}.chrome-toy-mid-drop{width:17%;left:75%;top:40%}.chrome-toy-mid-spark{width:13%;left:43%;top:78%}}
+
+/* Compact brand mark: the star attaches to the lower right of the P. */
+.wordmark,.floating-brand .wordmark{font-size:clamp(34px,3.5vw,49px);letter-spacing:-.08em;line-height:1;white-space:nowrap}
+.wordmark sup{font-size:.38em;top:auto;bottom:-.04em;right:-.33em;line-height:1}
+footer .wordmark{font-size:31px}
+@media(max-width:700px){.floating-brand .wordmark{font-size:34px}}
+/* Smaller chrome forms preserve Pia's face and avoid visual crowding. */
+.chrome-toy-ribbon{width:clamp(140px,19vw,250px);left:73%;top:48%}
+.chrome-toy-star{width:clamp(90px,12vw,160px);left:7%;top:48%}
+.chrome-toy-heart{width:clamp(80px,10vw,140px);left:79%;top:23%}
+.chrome-toy-small-ring{width:clamp(65px,8vw,108px)}
+.chrome-toy-small-drop{width:clamp(62px,7vw,95px)}
+.chrome-toy-small-star{width:clamp(55px,6vw,82px)}
+.chrome-toy-mid-arc{width:clamp(105px,12vw,170px)}
+.chrome-toy-mid-drop{width:clamp(85px,9vw,130px)}
+.chrome-toy-mid-spark{width:clamp(75px,8vw,110px)}
+@media(max-width:700px){.chrome-toy-ribbon{width:31%;left:68%;top:57%}.chrome-toy-star{width:20%;left:3%;top:53%}.chrome-toy-heart{width:18%;left:82%;top:30%}.chrome-toy-mid-arc{width:18%}.chrome-toy-mid-drop{width:15%}.chrome-toy-mid-spark{width:13%}}
+/* System or local night palette, with section contrast and readable controls. */
+html.night-mode{color-scheme:dark;--white:#18131a;--ink:#f7edf2;--pink:#e293b0;--pink-light:#714256;--berry:#ffe7f0;--line:#ffffff30}
+.night-mode body{background:#18131a;color:#f7edf2}
+.night-mode .hero,.night-mode .about,.night-mode .experience{background:#18131a}
+.night-mode .hero-aura{background:radial-gradient(ellipse,#70435499 0%,#39263566 50%,transparent 74%)}
+.night-mode .hero-kicker{color:#e0c5cf}
+.night-mode .hero-edition{background:#271b24c9;color:#fff}
+.night-mode .hero h1.hero-name{color:#bb6788}
+.night-mode .header nav a,.night-mode .about-copy,.night-mode .experience,.night-mode .hero-intro{color:#f7edf2}
+.night-mode .nav-work,.night-mode .music-player{color:#ffd1e2}
+.night-mode .work{background:#8c405f}
+.night-mode .work-heading h2{color:#fff1f7}
+.night-mode .work-heading p,.night-mode .work-heading .mini-label,.night-mode .filters button,.night-mode .project-meta{color:#fff1f7}
+.night-mode .project-stage{background:linear-gradient(145deg,#ad6583,#8c4563 50%,#a15575)}
+.night-mode .project h3,.night-mode .project-meta .category{color:#fff1f7}
+.night-mode .filters button.active{background:#f9dce8;color:#54253a}
+.night-mode .contact{background:#3b2534;color:#fff1f7}
+.night-mode .contact .mini-label,.night-mode .contact-top{color:#f2cfdd}
+.night-mode .split-button>span,.night-mode .split-button>i{background:#955571;color:#fff4f8}
+.night-mode .split-button:hover>span,.night-mode .split-button:hover>i{background:#ac6986}
+.night-mode .page-scroll{background:#4b2b3c;color:#ffe5ef;border-color:#d497b0}
+.night-mode .icon-link{background:#6d3c53;color:#fff1f7;border-color:#c78aa6}
+.night-mode dialog{background:#261c25;color:#f8ebf1}
+.night-mode .dialog-head{background:#261c25ef}
+.night-mode .skip{background:#392432;color:#fff}
