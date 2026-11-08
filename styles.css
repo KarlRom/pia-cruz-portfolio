@@ -272,3 +272,7 @@ footer a[aria-label="Back to top"]{display:none!important}
 .header nav a:hover::before,.header nav a:focus-visible::before{transform:scaleX(1) rotate(-1deg)}
 .header nav a:hover,.header nav a:focus-visible,.night-mode .header nav a:hover,.night-mode .header nav a:focus-visible{color:#432033}
 @media(prefers-reduced-motion:reduce){.header nav a::before{transition:none}}
+
+/* Straight, full-height navigation marker. */
+.header nav a::before{inset:0 -2px;clip-path:none;transform:scaleX(0);border-radius:0}
+.header nav a:hover::before,.header nav a:focus-visible::before{transform:scaleX(1)}
