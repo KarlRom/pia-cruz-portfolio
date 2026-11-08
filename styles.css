@@ -276,3 +276,8 @@ footer a[aria-label="Back to top"]{display:none!important}
 /* Straight, full-height navigation marker. */
 .header nav a::before{inset:0 -2px;clip-path:none;transform:scaleX(0);border-radius:0}
 .header nav a:hover::before,.header nav a:focus-visible::before{transform:scaleX(1)}
+
+/* Fast opening title zoom, confined to the existing hero background layer. */
+.hero h1.hero-name{transform-origin:50% 55%;animation:pia-intro-zoom .55s cubic-bezier(.16,1,.3,1) both}
+@keyframes pia-intro-zoom{from{transform:scale(3.8)}to{transform:scale(1)}}
+@media(prefers-reduced-motion:reduce){.hero h1.hero-name{animation:none;transform:none}}
