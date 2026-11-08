@@ -286,3 +286,8 @@ footer a[aria-label="Back to top"]{display:none!important}
 .header nav a{display:inline-flex;align-items:center;justify-content:flex-start}
 .filters button{display:inline-flex;align-items:center;justify-content:center;gap:6px}
 .filters sup{position:static;vertical-align:baseline;line-height:1;margin-left:0}
+
+/* Keep the category group centered independently of gallery controls. */
+.work-toolbar{display:flex;flex-direction:column;align-items:stretch}
+.work-toolbar .filters{width:100%;justify-content:center}
+.work-toolbar .gallery-arrows{align-self:flex-end}
