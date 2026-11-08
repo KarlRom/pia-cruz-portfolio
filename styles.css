@@ -169,3 +169,10 @@ html.night-mode{color-scheme:dark;--white:#18131a;--ink:#f7edf2;--pink:#e293b0;-
 .night-mode dialog{background:#261c25;color:#f8ebf1}
 .night-mode .dialog-head{background:#261c25ef}
 .night-mode .skip{background:#392432;color:#fff}
+
+/* Explicit foreground size caps and self-contained image sizing. */
+.hero > .chrome-toy:not(.chrome-distant):not(.chrome-mid){width:clamp(62px,8vw,120px);max-width:120px;min-width:0}
+.hero > .chrome-toy-ribbon{width:clamp(100px,12vw,175px)!important;max-width:175px!important}
+.hero > .chrome-toy img{width:100%;max-width:100%;height:auto;min-width:0;transform:none!important}
+.wordmark,.floating-brand .wordmark{display:inline-block;position:relative;font-size:clamp(42px,4vw,56px);padding-right:.12em;letter-spacing:-.06em}
+.wordmark sup{display:block;position:absolute;right:-.06em;bottom:.02em;top:auto;font-size:.49em;font-weight:900;line-height:1;letter-spacing:0;-webkit-text-stroke:1.2px currentColor}
