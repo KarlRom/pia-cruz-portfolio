@@ -120,3 +120,10 @@ dialog{width:min(960px,calc(100vw - 32px));padding:28px 36px 36px;max-height:88d
 .hero-stage{pointer-events:none}.hero-stage .portrait-window{pointer-events:none}
 @media(max-width:700px){.chrome-toy-small-ring{width:16%;left:18%;top:30%}.chrome-toy-small-drop{width:14%;left:79%;top:70%}.chrome-toy-small-star{width:12%;left:5%;top:77%}.chrome-toy-distant-ring{width:19%;left:3%;top:38%}.chrome-toy-distant-drop{width:16%;left:60%;top:25%}.chrome-toy-distant-star{width:18%;left:79%;top:51%}.chrome-toy-distant-heart{width:15%;left:23%;top:70%}.chrome-toy.chrome-distant{filter:blur(3px)}}
 .hero{width:100%;max-width:none;margin-inline:0}.chrome-toy .hero-metal{filter:drop-shadow(0 8px 12px #6a456924)}
+
+/* A distinct moving depth plane between the oversized letterforms and Pia. */
+.chrome-toy.chrome-mid,.chrome-toy.chrome-mid:active,.chrome-toy.chrome-mid.is-dragging{z-index:2}
+.chrome-toy-mid-arc{width:15%;left:17%;top:48%}
+.chrome-toy-mid-drop{width:12%;left:68%;top:37%}
+.chrome-toy-mid-spark{width:9%;left:43%;top:72%}
+@media(max-width:700px){.chrome-toy-mid-arc{width:21%;left:12%;top:51%}.chrome-toy-mid-drop{width:17%;left:75%;top:40%}.chrome-toy-mid-spark{width:13%;left:43%;top:78%}}
