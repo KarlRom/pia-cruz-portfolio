@@ -176,3 +176,9 @@ html.night-mode{color-scheme:dark;--white:#18131a;--ink:#f7edf2;--pink:#e293b0;-
 .hero > .chrome-toy img{width:100%;max-width:100%;height:auto;min-width:0;transform:none!important}
 .wordmark,.floating-brand .wordmark{display:inline-block;position:relative;font-size:clamp(42px,4vw,56px);padding-right:.12em;letter-spacing:-.06em}
 .wordmark sup{display:block;position:absolute;right:-.06em;bottom:.02em;top:auto;font-size:.49em;font-weight:900;line-height:1;letter-spacing:0;-webkit-text-stroke:1.2px currentColor}
+
+/* One consistent scroll control switches direction at the page end. */
+footer a[aria-label="Back to top"]{display:none!important}
+.page-scroll svg{transition:transform .2s ease}
+.page-scroll.at-end svg{transform:rotate(180deg)}
+@media(prefers-reduced-motion:reduce){.page-scroll svg{transition:none}}

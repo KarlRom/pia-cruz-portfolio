@@ -132,10 +132,11 @@ document.querySelectorAll('details.service-card').forEach(panel=>{
  function update(){
   scheduled=false;
   const page=document.scrollingElement||document.documentElement;
-  cue.hidden=page.scrollHeight-page.clientHeight-page.scrollTop<=24;
+  const atEnd=page.scrollHeight-page.clientHeight-page.scrollTop<=40;
+  cue.hidden=false;cue.classList.toggle('at-end',atEnd);cue.setAttribute('aria-label',atEnd?'Back to top':'Scroll down');
  }
  function schedule(){if(!scheduled){scheduled=true;requestAnimationFrame(update)}}
- cue.addEventListener('click',()=>window.scrollBy({top:Math.max(200,window.innerHeight*.75),behavior:reduceInteractions()?'instant':'smooth'}));
+ cue.addEventListener('click',()=>{const behavior=reduceInteractions()?'instant':'smooth';if(cue.classList.contains('at-end'))window.scrollTo({top:0,behavior});else window.scrollBy({top:Math.max(200,window.innerHeight*.75),behavior})});
  window.addEventListener('scroll',schedule,{passive:true});window.addEventListener('resize',schedule,{passive:true});
  if(typeof ResizeObserver==='function')new ResizeObserver(schedule).observe(document.body);
  window.addEventListener('load',schedule,{once:true});update();
