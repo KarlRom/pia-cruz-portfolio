@@ -184,7 +184,22 @@ footer a[aria-label="Back to top"]{display:none!important}
 @media(prefers-reduced-motion:reduce){.page-scroll svg{transition:none}}
 
 /* Varied foreground sizes: one focal ribbon, two medium accents. */
-.hero > .chrome-toy-ribbon{width:clamp(155px,21vw,300px)!important;max-width:300px!important}
+.hero > .chrome-toy-ribbon{width:clamp(186px,25.2vw,360px)!important;max-width:360px!important}
 .hero > .chrome-toy-star:not(.chrome-distant):not(.chrome-mid){width:clamp(115px,14vw,200px);max-width:200px}
-.hero > .chrome-toy-heart:not(.chrome-distant):not(.chrome-mid){width:clamp(105px,12vw,175px);max-width:175px}
-@media(max-width:700px){.hero > .chrome-toy-ribbon{width:clamp(125px,33vw,190px)!important;max-width:190px!important}.hero > .chrome-toy-star:not(.chrome-distant):not(.chrome-mid){width:clamp(90px,24vw,135px);max-width:135px}.hero > .chrome-toy-heart:not(.chrome-distant):not(.chrome-mid){width:clamp(82px,22vw,125px);max-width:125px}}
+.hero > .chrome-toy-heart:not(.chrome-distant):not(.chrome-mid){width:clamp(136.5px,15.6vw,227.5px);max-width:227.5px}
+@media(max-width:700px){.hero > .chrome-toy-ribbon{width:clamp(150px,39.6vw,228px)!important;max-width:228px!important}.hero > .chrome-toy-star:not(.chrome-distant):not(.chrome-mid){width:clamp(90px,24vw,135px);max-width:135px}.hero > .chrome-toy-heart:not(.chrome-distant):not(.chrome-mid){width:clamp(106.6px,28.6vw,162.5px);max-width:162.5px}}
+
+/* Melted glass service panels: a transparent body with a liquid silhouette. */
+.big-name span{display:inline-block;vertical-align:bottom;line-height:.72;transform:translateY(-.02em)}
+.services::before{background:linear-gradient(180deg,#30213045,#462e4220 50%,#251a2c66)}
+.services .glass-grid{gap:24px}
+.services .service-card,.services .service-card:nth-child(even){border:0;border-radius:0;clip-path:url(#service-liquid-outline);padding:34px 38px;background:linear-gradient(125deg,#ffffff38,#fff1 30%,#d99fb52b 67%,#ffffff30);backdrop-filter:blur(18px) saturate(135%);-webkit-backdrop-filter:blur(18px) saturate(135%);box-shadow:inset 0 2px 12px #ffffff45;color:#fff;isolation:isolate}
+.services .service-card::before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 5% 0%,#ffffff70,transparent 48%),radial-gradient(ellipse at 100% 100%,#f8c4db50,transparent 45%)}
+.services .service-card::after{content:'';position:absolute;inset:0;pointer-events:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M7 8 C18 1 24 9 36 5 S57 1 68 6 S91 0 96 12 S92 33 96 48 S99 77 94 87 S83 87 79 96 S69 92 58 94 S38 89 26 94 S5 97 5 83 S1 62 5 48 S1 18 7 8Z' fill='none' stroke='%23ffffff' stroke-opacity='.55' stroke-width='1.5' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") center/100% 100% no-repeat}
+.services .service-card summary{min-height:72px}
+.services .service-card h3{font-weight:500;text-shadow:0 1px 12px #281b2866}
+.services .service-card p{color:#fff;text-shadow:0 1px 8px #281b2877}
+.services .service-toggle{background:#ffffff24;border:1px solid #ffffff70;box-shadow:inset 0 1px 5px #ffffff45}
+.night-mode .services .service-card{background:linear-gradient(125deg,#ffffff26,#291e303b 45%,#dfadc52b)}
+@supports not (backdrop-filter:blur(1px)){.services .service-card{background:#50394bd9}}
+@media(max-width:700px){.services .glass-grid{gap:16px}.services .service-card,.services .service-card:nth-child(even){padding:30px 28px}.services .service-card h3{font-size:23px}}
