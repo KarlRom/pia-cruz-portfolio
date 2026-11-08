@@ -290,3 +290,13 @@ const musicTracks=[]; // Entries: {title:'Song title',file:'song.mp3'} in assets
  function update(){const hour=new Date().getHours();document.documentElement.classList.toggle('night-mode',media.matches||hour>=19||hour<6)}
  update();media.addEventListener('change',update);setInterval(update,60000);
 })();
+
+// Gentle reversible photo zoom, driven by the collage's progress through the viewport.
+(() => {
+ const frame=document.querySelector('.about-photo'),image=frame?.querySelector('.about-photo-crop img');
+ if(!image)return;
+ const reduced=matchMedia('(prefers-reduced-motion: reduce)');let pending=false;
+ function update(){pending=false;if(reduced.matches){image.style.removeProperty('--photo-zoom');return}const rect=frame.getBoundingClientRect();const progress=Math.max(0,Math.min(1,(innerHeight-rect.top)/(innerHeight+rect.height)));image.style.setProperty('--photo-zoom',(1+progress*.12).toFixed(4))}
+ function schedule(){if(!pending){pending=true;requestAnimationFrame(update)}}
+ addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule,{passive:true});addEventListener('load',schedule,{once:true});reduced.addEventListener('change',schedule);update();
+})();
