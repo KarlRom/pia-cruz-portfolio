@@ -213,3 +213,7 @@ footer a[aria-label="Back to top"]{display:none!important}
 .night-mode .services .service-card{background:linear-gradient(135deg,#ffffff20,#24182730 48%,#edc2d421)}
 .services .service-card summary:focus-visible{outline:2px solid white;outline-offset:7px;border-radius:8px}
 @supports not (backdrop-filter:blur(1px)){.services .service-card,.services .service-card:nth-child(even){background:#50394bdf}}
+
+/* Middle distance: softer than foreground chrome, sharper than the far layer. */
+.hero > .chrome-toy.chrome-mid{filter:blur(1.25px)}
+@media(max-width:700px){.hero > .chrome-toy.chrome-mid{filter:blur(.8px)}}
