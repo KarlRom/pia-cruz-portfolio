@@ -222,16 +222,30 @@ document.querySelectorAll('details.service-card').forEach(panel=>{
  document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelAnimationFrame(frame);frame=0}else wake()});
 })();
 
-// Keep one visible header logo: the floating copy appears after it scrolls away.
+// Keep the same logo visible as it reaches its fixed top position.
 (() => {
  const original=document.querySelector('.header .wordmark');
  if(!original)return;
- const floating=document.createElement('a');floating.className='floating-brand';floating.href='#';floating.hidden=true;floating.setAttribute('aria-label','Pia Cruz — back to top');
- const mark=document.createElement('span');mark.className='wordmark';mark.setAttribute('aria-hidden','true');mark.innerHTML=original.innerHTML;floating.append(mark);document.body.append(floating);
+ const placeholder=document.createElement('span');
+ placeholder.className='wordmark brand-placeholder';
+ placeholder.innerHTML=original.innerHTML;
+ placeholder.setAttribute('aria-hidden','true');
+ original.replaceWith(placeholder);
+ const floating=document.createElement('div');
+ floating.className='floating-brand';
+ original.setAttribute('aria-label','Pia Cruz — back to top');
+ floating.append(original);document.body.append(floating);
  let scheduled=false;
- function update(){scheduled=false;floating.hidden=original.getBoundingClientRect().bottom>0}
+ function update(){
+  scheduled=false;
+  floating.style.setProperty('--brand-scroll-top',`${Math.max(0,placeholder.getBoundingClientRect().top)}px`);
+ }
  function schedule(){if(!scheduled){scheduled=true;requestAnimationFrame(update)}}
- window.addEventListener('scroll',schedule,{passive:true});window.addEventListener('resize',schedule,{passive:true});window.addEventListener('pageshow',schedule);update();
+ window.addEventListener('scroll',schedule,{passive:true});
+ window.addEventListener('resize',schedule,{passive:true});
+ window.addEventListener('pageshow',schedule);
+ if(document.fonts)document.fonts.ready.then(schedule);
+ update();
 })();
 
 // One type-in per page visit, preserving semantic text and the final layout.

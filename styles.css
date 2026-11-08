@@ -297,3 +297,10 @@ footer a[aria-label="Back to top"]{display:none!important}
 .header .wordmark:hover sup,.header .wordmark:focus-visible sup,.floating-brand:hover .wordmark sup,.floating-brand:focus-visible .wordmark sup{animation-play-state:running}
 @keyframes brand-star-spin{to{transform:rotate(360deg)}}
 @media(prefers-reduced-motion:reduce){.header .wordmark sup,.floating-brand .wordmark sup{animation:none}}
+
+/* One persistent logo stops before reaching the viewport edge. */
+.header .brand-placeholder{visibility:hidden;pointer-events:none}
+.floating-brand{top:max(calc(14px + env(safe-area-inset-top)),var(--brand-scroll-top,14px));padding:0;animation:none;line-height:1}
+.floating-brand .wordmark{pointer-events:auto;line-height:.95}
+.floating-brand:focus-within{outline:3px solid #722d3d;outline-offset:4px}
+.floating-brand:focus-within .wordmark sup{animation-play-state:running}
