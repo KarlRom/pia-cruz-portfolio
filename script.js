@@ -96,7 +96,7 @@ document.querySelectorAll('details.service-card').forEach(panel=>{
  const metals=[...document.querySelectorAll('.hero-metal,.about-chrome,.contact-chrome')];
  if(!metals.length)return;
  const states=metals.map((el,i)=>({el,section:el.closest('section'),phase:i*2.1,x:0,y:0,vx:0,vy:0,px:0,py:0,visible:true}));
- let frame=0,last=0;
+ let frame=0,last=0,heroVisible=false;
  const observer=typeof IntersectionObserver==='function'?new IntersectionObserver(entries=>{entries.forEach(entry=>{const state=states.find(s=>s.el===entry.target);if(state)state.visible=entry.isIntersecting})},{rootMargin:'80px'}):null;
  states.forEach(s=>{
   observer?.observe(s.el);
@@ -145,9 +145,9 @@ document.querySelectorAll('details.service-card').forEach(panel=>{
 // Inertial chrome toys: pointer velocity, damped travel, and elastic edge impacts.
 (() => {
  const chromeHulls={"chrome-ribbon.webp":[[-0.46,0.235],[-0.455,0.205],[-0.45,0.1825],[-0.44,0.1525],[-0.43,0.13],[-0.225,-0.2375],[-0.195,-0.2825],[-0.18,-0.2975],[-0.15,-0.32],[-0.13,-0.3275],[0.34,-0.44],[0.375,-0.44],[0.395,-0.4325],[0.415,-0.4175],[0.43,-0.395],[0.44,-0.3725],[0.445,-0.3575],[0.45,-0.3275],[0.45,-0.2375],[0.445,-0.2075],[0.44,-0.185],[0.425,-0.14],[0.415,-0.1175],[0.37,-0.05],[-0.03,0.2875],[-0.07,0.3175],[-0.245,0.4225],[-0.275,0.4375],[-0.295,0.445],[-0.32,0.4525],[-0.345,0.4525],[-0.37,0.445],[-0.385,0.4375],[-0.415,0.415],[-0.435,0.385],[-0.445,0.3625],[-0.45,0.3475],[-0.455,0.325],[-0.46,0.295]],"chrome-star.png":[[-0.4139,0.0215],[-0.4091,0.0167],[0.0359,-0.4234],[0.0455,-0.4282],[0.4139,-0.0885],[0.4282,-0.0742],[0.4139,-0.0598],[-0.0933,0.4282],[-0.1029,0.4282],[-0.4139,0.0311]],"chrome-heart.png":[[-0.4474,-0.1842],[-0.4426,-0.2033],[-0.4378,-0.2177],[-0.4282,-0.2416],[-0.4187,-0.2608],[-0.39,-0.3038],[-0.3517,-0.3421],[-0.3325,-0.3565],[-0.2847,-0.3804],[-0.256,-0.39],[-0.2368,-0.3947],[-0.1651,-0.3947],[0.2703,-0.299],[0.2895,-0.2943],[0.3038,-0.2895],[0.3278,-0.2799],[0.3421,-0.2703],[0.3612,-0.256],[0.39,-0.2273],[0.4043,-0.2081],[0.4139,-0.1938],[0.4378,-0.1459],[0.4426,-0.1316],[0.4474,-0.1124],[0.4522,-0.0885],[0.4522,-0.0359],[0.4474,-0.0072],[0.4426,0.012],[0.433,0.0407],[0.4187,0.0742],[0.4043,0.0981],[0.3756,0.1364],[0.3469,0.1651],[0.3182,0.189],[0.2895,0.2081],[0.2656,0.2225],[0.2177,0.2464],[-0.1316,0.39],[-0.1459,0.3947],[-0.1746,0.3947],[-0.1842,0.3852],[-0.4043,0.0072],[-0.4282,-0.0407],[-0.4426,-0.0837],[-0.4474,-0.1029]],"chrome-ring.png":[[-0.3852,0.0167],[-0.3804,-0.012],[-0.366,-0.055],[-0.3565,-0.0742],[-0.3421,-0.0981],[-0.3278,-0.1172],[-0.2751,-0.1699],[-0.256,-0.1842],[-0.2273,-0.2033],[-0.2033,-0.2177],[0.0598,-0.3708],[0.1077,-0.3947],[0.1364,-0.4043],[0.1555,-0.4091],[0.2177,-0.4091],[0.2464,-0.3995],[0.2656,-0.39],[0.2799,-0.3804],[0.3038,-0.3565],[0.3134,-0.3421],[0.3278,-0.3182],[0.3325,-0.3086],[0.3517,-0.2512],[0.3565,-0.2321],[0.3612,-0.2081],[0.366,-0.1794],[0.3708,-0.1364],[0.3708,0.0215],[0.366,0.0646],[0.3565,0.1172],[0.3517,0.1364],[0.3421,0.1699],[0.3373,0.1842],[0.323,0.2177],[0.3134,0.2368],[0.299,0.2608],[0.2895,0.2751],[0.2751,0.2943],[0.2273,0.3421],[0.2081,0.3565],[0.1938,0.366],[0.1459,0.39],[0.1316,0.3947],[0.1124,0.3995],[0.0885,0.4043],[0.0311,0.4043],[0.0024,0.3995],[-0.0167,0.3947],[-0.0455,0.3852],[-0.0694,0.3756],[-0.1077,0.3565],[-0.1411,0.3373],[-0.2273,0.2799],[-0.2656,0.2512],[-0.2943,0.2273],[-0.3325,0.189],[-0.3469,0.1699],[-0.3565,0.1555],[-0.3708,0.1268],[-0.3756,0.1124],[-0.3804,0.0933],[-0.3852,0.0694]],"chrome-drop.png":[[-0.366,0.1746],[-0.3612,0.1364],[-0.3517,0.0981],[-0.323,0.0407],[-0.3038,0.012],[-0.2847,-0.012],[-0.2512,-0.0455],[-0.2273,-0.0646],[-0.2129,-0.0742],[0.3182,-0.4091],[0.3373,-0.3995],[0.3469,-0.39],[0.3565,-0.3756],[0.366,-0.3469],[0.366,-0.2895],[0.3565,-0.2512],[0.1459,0.2512],[0.1268,0.2895],[0.1077,0.3182],[0.055,0.3708],[0.0263,0.39],[-0.0024,0.4043],[-0.0455,0.4187],[-0.0694,0.4234],[-0.1555,0.4234],[-0.1794,0.4187],[-0.2081,0.4091],[-0.2464,0.39],[-0.2608,0.3804],[-0.2799,0.366],[-0.3038,0.3421],[-0.3182,0.323],[-0.3278,0.3086],[-0.3421,0.2847],[-0.3517,0.2608],[-0.3565,0.2464],[-0.3612,0.2273],[-0.366,0.189]]};
- const toys=[...document.querySelectorAll('.chrome-toy')].map(el=>({el,stage:el.closest('.hero'),hull:chromeHulls[el.querySelector('img').getAttribute('src').split('/').pop()],x:0,y:0,vx:0,vy:0,drag:null,tilt:0,spin:0,squash:0}));
+ const toys=[...document.querySelectorAll('.chrome-toy')].map((el,index)=>({el,index,stage:el.closest('.hero'),hull:chromeHulls[el.querySelector('img').getAttribute('src').split('/').pop()],x:0,y:0,vx:0,vy:0,drag:null,tilt:0,spin:0,squash:0}));
  if(!toys.length)return;
- let frame=0,last=0;
+ let frame=0,last=0,heroVisible=false;
  const clamp=(n,lo,hi)=>Math.max(lo,Math.min(hi,n));
  function bounds(s){
   // Collide the visible chrome silhouette with the full hero edges, not image padding.
@@ -163,20 +163,22 @@ document.querySelectorAll('details.service-card').forEach(panel=>{
  function paint(s){s.el.style.setProperty('--drag-x',s.x+'px');s.el.style.setProperty('--drag-y',s.y+'px');s.el.style.setProperty('--toy-tilt',s.tilt+'deg');s.el.style.setProperty('--toy-stretch',String(1+s.squash))}
  function constrain(s,bounce){const b=bounds(s);if(s.x<b.l){s.x=b.l;if(bounce)s.vx=Math.abs(s.vx)*.76;s.squash=.055;if(bounce)s.spin=clamp(s.spin+s.vy*.16,-240,240)}if(s.x>b.r){s.x=b.r;if(bounce)s.vx=-Math.abs(s.vx)*.76;s.squash=.055;if(bounce)s.spin=clamp(s.spin+s.vy*.16,-240,240)}if(s.y<b.t){s.y=b.t;if(bounce)s.vy=Math.abs(s.vy)*.76;s.squash=-.045;if(bounce)s.spin=clamp(s.spin-s.vx*.16,-240,240)}if(s.y>b.b){s.y=b.b;if(bounce)s.vy=-Math.abs(s.vy)*.76;s.squash=-.045;if(bounce)s.spin=clamp(s.spin-s.vx*.16,-240,240)}}
  function tick(now){
-  frame=0;const dt=Math.min((now-last)/1000||1/60,.032);last=now;let moving=false;
+  frame=0;if(!heroVisible)return;const dt=Math.min((now-last)/1000||1/60,.032);last=now;let moving=false;
   toys.forEach(s=>{
    if(s.drag)return;
    if(reduceInteractions()){s.vx=s.vy=s.spin=s.squash=0;paint(s);return}
+   const phase=now*.00032+s.index*2.399;
+   s.vx+=Math.sin(phase)*8*dt;s.vy+=Math.cos(phase*.83)*7*dt;
    s.x+=s.vx*dt;s.y+=s.vy*dt;
    const friction=Math.exp(-.65*dt);s.vx*=friction;s.vy*=friction;
    s.tilt+=s.spin*dt;s.spin*=Math.exp(-1.2*dt);s.squash*=Math.exp(-dt*12);constrain(s,true);
-   if(Math.hypot(s.vx,s.vy)<4)s.vx=s.vy=0;
+   if(Math.hypot(s.vx,s.vy)<.15)s.vx=s.vy=0;
    if(Math.abs(s.spin)<.5)s.spin=0;if(Math.abs(s.squash)<.001)s.squash=0;
-   paint(s);moving ||= Boolean(s.vx||s.vy||s.spin||s.squash);
+   paint(s);moving=true;
   });
   if(moving)frame=requestAnimationFrame(tick);
  }
- function wake(){if(!frame&&!document.hidden){last=performance.now();frame=requestAnimationFrame(tick)}}
+ function wake(){if(!frame&&heroVisible&&!document.hidden){last=performance.now();frame=requestAnimationFrame(tick)}}
  function reset(s){s.x=s.y=s.vx=s.vy=s.tilt=s.spin=s.squash=0;paint(s)}
  function nudge(s){s.vx=(s.el.offsetLeft+s.x+s.el.offsetWidth/2>s.stage.clientWidth/2?-1:1)*420;s.vy=-240;s.spin=s.vx>0?55:-55;wake()}
  toys.forEach(s=>{
@@ -213,6 +215,8 @@ document.querySelectorAll('details.service-card').forEach(panel=>{
   });
   el.addEventListener('dblclick',()=>reset(s));
  });
+ const hero=toys[0].stage;
+ if(typeof IntersectionObserver==='function')new IntersectionObserver(entries=>{heroVisible=entries[0].isIntersecting;if(heroVisible)wake();else{cancelAnimationFrame(frame);frame=0}},{threshold:0}).observe(hero);else{heroVisible=true;wake()}
  window.addEventListener('resize',()=>toys.forEach(s=>{constrain(s,false);paint(s)}),{passive:true});
  document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelAnimationFrame(frame);frame=0}else wake()});
 })();
