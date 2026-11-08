@@ -157,9 +157,9 @@ document.querySelectorAll('details.service-card').forEach(panel=>{
   const transformed=points.map(([x,y])=>{const px=x*w*(1+s.squash),py=y*h*(1-s.squash);return [px*c-py*n,px*n+py*c]});
   const xs=transformed.map(p=>p[0]),ys=transformed.map(p=>p[1]);
   const cx=s.el.offsetLeft+w/2,cy=s.el.offsetTop+h/2;
-  const header=s.stage.querySelector('.header'),visual=s.stage.querySelector('.hero-stage');
-  const top=header.offsetHeight+12,bottom=visual.offsetTop+visual.offsetHeight-12;
-  return {l:-cx-Math.min(...xs),r:s.stage.clientWidth-cx-Math.max(...xs),t:top-cy-Math.min(...ys),b:bottom-cy-Math.max(...ys)};
+  const rect=s.stage.getBoundingClientRect();
+  const left=-rect.left,right=document.documentElement.clientWidth-rect.left;
+  return {l:left-cx-Math.min(...xs),r:right-cx-Math.max(...xs),t:-cy-Math.min(...ys),b:s.stage.clientHeight-cy-Math.max(...ys)};
  }
  function paint(s){s.el.style.setProperty('--drag-x',s.x+'px');s.el.style.setProperty('--drag-y',s.y+'px');s.el.style.setProperty('--toy-tilt',s.tilt+'deg');s.el.style.setProperty('--toy-stretch',String(1+s.squash))}
  function constrain(s,bounce){const b=bounds(s);if(s.x<b.l){s.x=b.l;if(bounce)s.vx=Math.abs(s.vx)*.76;s.squash=.055;if(bounce)s.spin=clamp(s.spin+s.vy*.16,-240,240)}if(s.x>b.r){s.x=b.r;if(bounce)s.vx=-Math.abs(s.vx)*.76;s.squash=.055;if(bounce)s.spin=clamp(s.spin+s.vy*.16,-240,240)}if(s.y<b.t){s.y=b.t;if(bounce)s.vy=Math.abs(s.vy)*.76;s.squash=-.045;if(bounce)s.spin=clamp(s.spin-s.vx*.16,-240,240)}if(s.y>b.b){s.y=b.b;if(bounce)s.vy=-Math.abs(s.vy)*.76;s.squash=-.045;if(bounce)s.spin=clamp(s.spin-s.vx*.16,-240,240)}}
