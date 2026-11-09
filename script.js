@@ -275,54 +275,6 @@ document.querySelectorAll('details.service-card').forEach(panel=>{
  reduced.addEventListener('change',()=>{if(reduced.matches){clearTimeout(timer);observer.disconnect();started=true;chars.forEach(c=>{c.classList.add('typed');c.classList.remove('caret','caret-start')})}});
 })();
 
-// Add approved hosted tracks here; local selection is a private preview only.
-const musicTracks=[]; // Entries: {title:'Song title',file:'song.mp3'} in assets/.
-(() => {
- const audio=document.getElementById('background-audio'),title=document.getElementById('music-title'),toggle=document.getElementById('audio-toggle'),next=document.getElementById('audio-next'),picker=document.getElementById('music-files'),status=document.getElementById('audio-status');
- const widget=title.closest('.music-player');let tracks=musicTracks.map(t=>({title:t.title,url:asset(t.file)})),index=0,localUrls=[],request=0;
- function render(){const track=tracks[index];title.textContent=track?.title||'Choose music';title.title=track?track.title:'Choose audio files to preview';toggle.disabled=!track;next.disabled=tracks.length<2;widget.classList.toggle('is-playing',!audio.paused);toggle.setAttribute('aria-label',audio.paused?'Play music':'Pause music')}
- async function play(){const token=++request;try{await audio.play();if(token===request)status.textContent='Playing '+tracks[index].title}catch(error){if(token===request&&error.name!=='AbortError')status.textContent=error.name==='NotAllowedError'?'Press play to start music.':'Could not play this file. Choose another supported audio file.'}render()}
- function select(n,resume=false){request++;audio.pause();index=n;if(tracks[index]){audio.src=tracks[index].url;audio.load()}render();if(resume)play()}
- let selectionChanged=false;
- function storedFiles(mode,files){
-  return new Promise((resolve,reject)=>{
-   const opening=indexedDB.open('pia-music',1);
-   opening.onupgradeneeded=()=>opening.result.createObjectStore('playlist');
-   opening.onerror=()=>reject(opening.error);
-   opening.onsuccess=()=>{
-    const db=opening.result,tx=db.transaction('playlist',mode),store=tx.objectStore('playlist');
-    const op=mode==='readwrite'?store.put(files,'files'):store.get('files');
-    tx.oncomplete=()=>{db.close();resolve(op.result)};
-    tx.onerror=()=>{db.close();reject(tx.error)};
-    tx.onabort=()=>{db.close();reject(tx.error)};
-   };
-  });
- }
- function loadFiles(files,resume){
-  request++;audio.pause();audio.removeAttribute('src');audio.load();
-  localUrls.forEach(url=>URL.revokeObjectURL(url));localUrls=[];
-  tracks=files.map(file=>{const url=URL.createObjectURL(file);localUrls.push(url);return {title:file.name.replace(/\.[^.]+$/,''),url}});
-  select(0,resume);
- }
- title.addEventListener('click',()=>picker.click());
- picker.addEventListener('change',()=>{
-  const files=[...picker.files];if(!files.length)return;
-  selectionChanged=true;loadFiles(files,true);picker.value='';
-  storedFiles('readwrite',files).catch(()=>{status.textContent='Music is ready, but this browser could not save it for your next visit.'});
- });
- storedFiles('readonly').then(files=>{
-  if(selectionChanged||!files?.length)return;
-  loadFiles(files,false);status.textContent='Your music is ready. Press play.';
- }).catch(()=>{});
- toggle.addEventListener('click',()=>{if(audio.paused)play();else{request++;audio.pause()}});
- next.addEventListener('click',()=>{if(tracks.length>1)select((index+1)%tracks.length,!audio.paused)});
- audio.addEventListener('ended',()=>{if(tracks.length)select((index+1)%tracks.length,true)});
- ['play','pause','loadedmetadata'].forEach(event=>audio.addEventListener(event,render));
- audio.addEventListener('error',()=>{status.textContent='This audio file could not be loaded. Choose another file.';render()});
- window.addEventListener('pagehide',()=>{audio.pause()});
- if(tracks.length)select(0);else render();
-})();
-
 // Follow the system dark setting and the visitor’s local evening hours.
 (() => {
  const media=window.matchMedia('(prefers-color-scheme: dark)');
