@@ -47,7 +47,6 @@ header{position:relative;z-index:5}
 .chrome-piece.depth-middle{z-index:2;width:clamp(90px,12vw,180px);filter:blur(1.4px);opacity:.94}
 .chrome-piece.depth-distant{z-index:0;width:clamp(80px,11vw,165px);filter:blur(6px);opacity:.55}
 .intro>.eyebrow,.intro>h1,.intro-copy,.socials,.game,footer{z-index:5}
-.intro>.eyebrow,.intro>h1,.intro-copy{background:var(--bg);border-radius:16px}
 .socials .link-icon,.socials a:hover .link-icon,.socials a:focus-visible .link-icon,.dark .socials .link-icon,.dark .socials a:hover .link-icon,.dark .socials a:focus-visible .link-icon{background:transparent;color:inherit;border-radius:0}
 .socials .link-icon .action-arrow{width:29px;height:29px;stroke-width:4}
 @media(max-width:600px){.portrait-stage{--stage-height:350px}.big-name{font-size:66vw}.chrome-piece.depth-middle{filter:blur(1px);width:90px}.chrome-piece.depth-distant{filter:blur(4px);width:75px}}
