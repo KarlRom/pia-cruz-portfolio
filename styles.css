@@ -67,7 +67,7 @@ dialog{width:min(960px,calc(100vw - 32px));padding:28px 36px 36px;max-height:88d
 .hero-stage .portrait-window{left:31%;top:5%;bottom:0;width:38%;height:95%;z-index:3;overflow:visible;border-radius:0;background:none;box-shadow:none}
 .hero-stage .portrait-window img{object-fit:contain;object-position:center bottom}
 .hero-kicker,.hero-edition{z-index:7;pointer-events:none}.hero-edition{right:var(--pad);bottom:14px;padding:4px 8px;background:#fff9;border-radius:20px}
-.chrome-toy{position:absolute;z-index:5;display:block;padding:0;border:0;background:none;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;transform:translate(var(--drag-x,0px),var(--drag-y,0px));border-radius:40%;line-height:0}
+.chrome-toy{-webkit-tap-highlight-color:transparent;position:absolute;z-index:5;display:block;padding:0;border:0;background:none;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;transform:translate(var(--drag-x,0px),var(--drag-y,0px));border-radius:40%;line-height:0}
 .chrome-toy:active,.chrome-toy.is-dragging{cursor:grabbing;z-index:6}.chrome-toy:focus-visible{outline:3px dashed #722d3d;outline-offset:4px}
 .chrome-toy .hero-metal{position:relative;display:block;inset:auto;width:100%;height:auto;pointer-events:none;transform:none}
 .chrome-toy-ribbon{width:34%;left:53%;top:59%}.chrome-toy-star{width:19%;left:10%;top:45%}.chrome-toy-heart{width:16%;left:73%;top:12%}
@@ -328,3 +328,5 @@ footer a[aria-label="Back to top"]{display:none!important}
   .contact-orb .action-arrow,
   .contact-orb { transition: none; }
 }
+
+.asterisk-icon { display: inline-block; vertical-align: -.12em; }
