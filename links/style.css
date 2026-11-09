@@ -18,9 +18,9 @@ header{position:relative;z-index:5}
 @media(max-width:600px){.portrait-stage{height:350px}.big-name{font-size:66vw}.chrome-piece{width:85px}.chrome-piece:nth-child(2){width:145px}}
 
 /* Match the portfolio’s bold circular arrow and turning hover gesture. */
-.socials .link-icon{display:grid;place-items:center;flex:0 0 46px;width:46px;height:46px;border-radius:50%;background:#f4cad9;color:#612b40;transition:transform .28s ease,background .28s ease}
+.socials .link-icon{display:grid;place-items:center;flex:0 0 46px;width:46px;height:46px;border-radius:50%;background:#f4cad9;color:#612b40;transform:rotate(-45deg);transition:transform .28s ease,background .28s ease}
 .socials .link-icon .action-arrow{width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
-.socials a:hover .link-icon,.socials a:focus-visible .link-icon{transform:rotate(45deg);background:#ebaac1}
+.socials a:hover .link-icon,.socials a:focus-visible .link-icon{transform:rotate(0deg);background:#ebaac1}
 .dark .socials .link-icon{background:#734458;color:#ffeaf3}
 .dark .socials a:hover .link-icon,.dark .socials a:focus-visible .link-icon{background:#ac6986}
 
