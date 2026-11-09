@@ -9,7 +9,28 @@ const targets=new Set();
 try{best=Number(localStorage.getItem('pia-chrome-score-v2'))||0;muted=localStorage.getItem('pia-game-muted')==='true'}catch{}
 function soundLabel(){sound.textContent=muted?'Sound off':'Sound on';sound.setAttribute('aria-pressed',String(!muted))}soundLabel();
 function audioReady(){try{if(!context){const Audio=window.AudioContext||window.webkitAudioContext;if(Audio)context=new Audio()}if(context?.state==='suspended')context.resume().catch(()=>{})}catch{}}
-function tone(freq,duration=.12,delay=0){if(muted||!context||context.state!=='running')return;const t=context.currentTime+delay,osc=context.createOscillator(),gain=context.createGain();osc.type='sine';osc.frequency.setValueAtTime(freq,t);osc.frequency.exponentialRampToValueAtTime(freq*.8,t+duration);gain.gain.setValueAtTime(0,t);gain.gain.linearRampToValueAtTime(.075,t+.008);gain.gain.exponentialRampToValueAtTime(.001,t+duration);osc.connect(gain);gain.connect(context.destination);osc.start(t);osc.stop(t+duration+.02);osc.onended=()=>{osc.disconnect();gain.disconnect()}}
+// Inharmonic partials give each hit a polished metal/glass resonance.
+function tone(freq,duration=.12,delay=0){
+ if(muted||!context||context.state!=='running')return;
+ const t=context.currentTime+delay,low=freq<250;
+ const partials=low?[[1,.035],[2.71,.013]]:[[1,.045],[2.756,.021],[4.07,.012],[5.43,.006]];
+ partials.forEach(([ratio,level],i)=>{
+  const f=Math.min(freq*(low?1:1.45)*ratio,10500),tail=low?.12:Math.min(.8,duration*2.2+.16)/(1+i*.28);
+  const osc=context.createOscillator(),gain=context.createGain();
+  osc.type='sine';osc.frequency.setValueAtTime(f,t);osc.frequency.exponentialRampToValueAtTime(f*.992,t+tail);
+  gain.gain.setValueAtTime(0,t);gain.gain.linearRampToValueAtTime(level,t+.003);gain.gain.exponentialRampToValueAtTime(.0001,t+tail);
+  osc.connect(gain);gain.connect(context.destination);osc.start(t);osc.stop(t+tail+.02);
+  osc.onended=()=>{osc.disconnect();gain.disconnect()};
+ });
+ if(!low){
+  const osc=context.createOscillator(),gain=context.createGain(),tail=.16;
+  osc.type='sine';osc.frequency.setValueAtTime(Math.min(freq*6.2,11500),t+.025);
+  gain.gain.setValueAtTime(0,t+.025);gain.gain.linearRampToValueAtTime(.007,t+.03);gain.gain.exponentialRampToValueAtTime(.0001,t+tail);
+  osc.connect(gain);gain.connect(context.destination);osc.start(t+.025);osc.stop(t+tail+.02);
+  osc.onended=()=>{osc.disconnect();gain.disconnect()};
+ }
+}
+
 sound.onclick=()=>{muted=!muted;try{localStorage.setItem('pia-game-muted',String(muted))}catch{}audioReady();soundLabel();if(!muted)tone(660)};
 function hud(){ $('score').textContent=String(score).padStart(3,'0');$('timer').textContent=Math.ceil(left)+'s';$('best').textContent='Best '+best;$('combo').textContent=combo>=2?`${combo} streak · ×${Math.min(4,1+Math.floor(combo/4))}`:'Build your streak';$('time-fill').style.transform=`scaleX(${left/30})`;arena.classList.toggle('last-seconds',left<=5&&state==='playing')}
 function clearTargets(){targets.forEach(t=>t.el.remove());targets.clear()}
